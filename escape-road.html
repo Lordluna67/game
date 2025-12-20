@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>Escape Road - My Website</title>
+  <link rel="stylesheet" href="style.css"> <base href="https://cdn.jsdelivr.net/gh/abisdbest/classroom.google.com@45b2d69c626dc365753f6922d2c48c4075683ef5/drive.google.com/escape%20road/">
+  
+  <style>
+    body { background-color: #000; margin: 0; overflow: hidden; }
+    
+    /* Overlay for the back button so it stays on top of the game */
+    .game-nav {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 999;
+    }
+
+    #unity-container { width: 100vw; height: 100vh; }
+    canvas { width: 100%; height: 100%; }
+  </style>
+</head>
+<body class="dark">
+
+  <div class="game-nav">
+    <a href="download.html" class="btn-base" style="padding: 8px 15px; font-size: 14px;">← Back to Downloads</a>
+  </div>
+
+  <div id="unity-container">
+    <canvas id="unity-canvas"></canvas>
+  </div>
+
+  <div id="loading-cover" style="display:none; background: black; position: fixed; top:0; left:0; width:100%; height:100%;">
+    <div id="unity-loading-bar">
+      <canvas id="logo-canvas"></canvas>
+      <img src="loading.png" id="ld_bg" style="display:none;">
+      <img src="car-icon.png" id="ld_car" style="display:none;">
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector("#unity-container");
+    const canvas = document.querySelector("#unity-canvas");
+    const loadingCover = document.querySelector("#loading-cover");
+    const buildUrl = "TemplateData";
+    const loaderUrl = buildUrl + "/loader.js";
+    const config = {
+      dataUrl: buildUrl + "/data.unityweb",
+      frameworkUrl: buildUrl + "/framework.js.unityweb",
+      codeUrl: buildUrl + "/wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "1games.io",
+      productName: "Escape Road",
+      productVersion: "2.0",
+    };
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        // Loading logic
+      }).then((unityInstance) => {
+        loadingCover.style.display = "none";
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>
