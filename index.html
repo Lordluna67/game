@@ -27,21 +27,22 @@
       font-size: 18px;
       color: black;
       background-color: lime;
-      border: none;
+      border: 2px solid lime;
       border-radius: 6px;
       cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.1s;
+      transition: background-color 0.2s, color 0.2s, border 0.2s;
     }
 
     .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px lime;
+      background-color: black;
+      color: lime;
+      border: 2px solid lime;
     }
   </style>
 </head>
 <body>
 
-  <h1>Welcome To My Game Site</h1>
+  <h1>Welcome To My Game Site!</h1>
 
   <button class="btn" onclick="location.href='download.html'">
     Download Games
