@@ -2,48 +2,40 @@
 <html lang="en-us">
 <head>
   <meta charset="utf-8">
-  <title>Escape Road - My Website</title>
-  <link rel="stylesheet" href="style.css"> <base href="https://cdn.jsdelivr.net/gh/abisdbest/classroom.google.com@45b2d69c626dc365753f6922d2c48c4075683ef5/drive.google.com/escape%20road/">
-  
+  <title>New Tab</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    body { background-color: #000; margin: 0; overflow: hidden; }
-    
-    /* Overlay for the back button so it stays on top of the game */
-    .game-nav {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 999;
+    body { background-color: #000; margin: 0; overflow: hidden; color: lime; font-family: sans-serif; }
+    #unity-container { width: 100vw; height: 100vh; position: relative; }
+    #unity-canvas { width: 100%; height: 100%; background: #000; }
+    .game-nav { position: absolute; top: 10px; left: 10px; z-index: 100; }
+    #loading-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: black; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; z-index: 50;
     }
-
-    #unity-container { width: 100vw; height: 100vh; }
-    canvas { width: 100%; height: 100%; }
   </style>
 </head>
-<body class="dark">
+<body>
 
   <div class="game-nav">
-    <a href="download.html" class="btn-base" style="padding: 8px 15px; font-size: 14px;">← Back to Downloads</a>
+    <a href="download.html" class="btn-base" style="padding: 8px 15px;">← Back</a>
+  </div>
+
+  <div id="loading-overlay">
+    <h2>LOADING ESCAPE ROAD...</h2>
+    <div id="progress-text">0%</div>
   </div>
 
   <div id="unity-container">
     <canvas id="unity-canvas"></canvas>
   </div>
 
-  <div id="loading-cover" style="display:none; background: black; position: fixed; top:0; left:0; width:100%; height:100%;">
-    <div id="unity-loading-bar">
-      <canvas id="logo-canvas"></canvas>
-      <img src="loading.png" id="ld_bg" style="display:none;">
-      <img src="car-icon.png" id="ld_car" style="display:none;">
-    </div>
-  </div>
-
   <script>
-    const container = document.querySelector("#unity-container");
-    const canvas = document.querySelector("#unity-canvas");
-    const loadingCover = document.querySelector("#loading-cover");
-    const buildUrl = "TemplateData";
-    const loaderUrl = buildUrl + "/loader.js";
+    // These paths are specific to the CDN hosted files in your uploaded code
+    const baseUrl = "https://cdn.jsdelivr.net/gh/abisdbest/classroom.google.com@45b2d69c626dc365753f6922d2c48c4075683ef5/drive.google.com/escape%20road/";
+    const buildUrl = baseUrl + "TemplateData";
+    
     const config = {
       dataUrl: buildUrl + "/data.unityweb",
       frameworkUrl: buildUrl + "/framework.js.unityweb",
@@ -54,15 +46,24 @@
       productVersion: "2.0",
     };
 
-    var script = document.createElement("script");
-    script.src = loaderUrl;
+    const canvas = document.querySelector("#unity-canvas");
+    const overlay = document.querySelector("#loading-overlay");
+    const progressText = document.querySelector("#progress-text");
+
+    // Load the Unity Loader Script first
+    const script = document.createElement("script");
+    script.src = buildUrl + "/loader.js";
+    
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
-        // Loading logic
+        progressText.innerHTML = Math.round(100 * progress) + "%";
       }).then((unityInstance) => {
-        loadingCover.style.display = "none";
+        overlay.style.display = "none";
+      }).catch((message) => {
+        alert("Game Load Error: " + message);
       });
     };
+
     document.body.appendChild(script);
   </script>
 </body>
