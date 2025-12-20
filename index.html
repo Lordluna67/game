@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Tab</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #000;
+      color: lime;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      width: 220px;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 18px;
+      color: black;
+      background-color: lime;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px lime;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome To My Game Site</h1>
+
+  <button class="btn" onclick="location.href='download.html'">
+    Download Games
+  </button>
+
+  <button class="btn" onclick="location.href='calculator.html'">
+    Calculator
+  </button>
+
+</body>
+</html>
