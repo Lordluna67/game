@@ -1,68 +1,63 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Escape Road</title>
+    <meta charset="UTF-8">
+    <title>Escape Road - Play</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #000; margin: 0; overflow: hidden; }
-        #unity-container { width: 100vw; height: 100vh; }
-        #unity-canvas { width: 100%; height: 100%; background: #000; }
-        .back-nav {
-            position: absolute; top: 10px; left: 10px; z-index: 100;
-            padding: 10px 15px; background: lime; color: black;
-            text-decoration: none; font-family: sans-serif; font-weight: bold;
-            border-radius: 4px;
+        body, html {
+            margin: 0; padding: 0;
+            height: 100%; width: 100%;
+            background-color: #000;
+            overflow: hidden; /* Prevents scrollbars from breaking controls */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .nav-bar {
+            background: #111;
+            padding: 10px;
+            border-bottom: 2px solid lime;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+        }
+        /* The Game Window */
+        #game-frame {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
 
-    <a href="download.html" class="back-nav">← BACK</a>
-
-    <div id="unity-container">
-        <canvas id="unity-canvas" tabindex="1"></canvas>
+    <div class="container">
+        <div class="nav-bar">
+            <a href="download.html" class="btn-base" style="padding: 5px 15px; font-size: 14px; text-decoration: none;">
+                ← Back to Site
+            </a>
+            <span style="margin-left: 20px; color: lime; font-family: sans-serif; font-size: 14px;">
+                Tip: Click the game screen once to enable Arrow Keys.
+            </span>
+        </div>
+        
+        <iframe id="game-frame" 
+                src="https://escaperoads.org/game/escape-road" 
+                allowfullscreen="true" 
+                scrolling="no">
+        </iframe>
     </div>
 
     <script>
-        // Direct link to the working game engine
-        const buildUrl = "https://cdn.jsdelivr.net/gh/sk1001-projects/escape-road@main/Build";
-        const config = {
-            dataUrl: buildUrl + "/escape-road.data",
-            frameworkUrl: buildUrl + "/escape-road.framework.js",
-            codeUrl: buildUrl + "/escape-road.wasm",
-            streamingAssetsUrl: "StreamingAssets",
-            companyName: "1games.io",
-            productName: "Escape Road",
-            productVersion: "2.0",
-        };
-
-        const canvas = document.querySelector("#unity-canvas");
-        const script = document.createElement("script");
-        script.src = buildUrl + "/escape-road.loader.js";
-        
-        script.onload = () => {
-            createUnityInstance(canvas, config, (progress) => {
-            }).then((unityInstance) => {
-                // Focus the game automatically when it loads
-                canvas.focus();
-                
-                // Keep the game focused even if the user clicks away and back
-                window.addEventListener('click', () => {
-                    canvas.focus();
-                });
-            });
-        };
-
-        // This is the most important part for Chromebooks:
-        // It stops the browser from using Arrow Keys to scroll, 
-        // so the car actually moves!
-        window.addEventListener("keydown", function(e) {
-            if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-                e.preventDefault();
-            }
-        }, false);
-
-        document.body.appendChild(script);
+        // Chromebook Fix: Forces the game to stay focused
+        window.addEventListener('click', function() {
+            document.getElementById('game-frame').focus();
+        });
     </script>
+
 </body>
 </html>
