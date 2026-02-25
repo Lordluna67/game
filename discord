@@ -1,1 +1,3 @@
-https://discord.gg/Fyy3rTrB
+<button class="btn-base" style="width: 220px; margin: 10px;" onclick="location.href='https://discord.gg/Fyy3rTrB'">
+    Click Me!
+  </button>
